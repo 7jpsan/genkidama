@@ -1,0 +1,44 @@
+{
+  "name": "genkidama",
+  "version": "1.0.0",
+  "description": "Crypto library for encryption/decryption of files/streams in node",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "prepublish": "npm run lint && npm run build && npm run test",
+    "build": "tsc",
+    "lint": "tslint 'lib/**/*.ts' && tslint 'test/**/*.ts'",
+    "test": "ts-node node_modules/.bin/jasmine test/**/*.spec.ts"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/7jpsan/genkidama.git"
+  },
+  "keywords": [
+    "crypto",
+    "typescript",
+    "aes",
+    "cbc",
+    "ctr",
+    "node"
+  ],
+  "author": "Paulo Soares",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/7jpsan/genkidama/issues"
+  },
+  "homepage": "https://github.com/7jpsan/genkidama#readme",
+  "dependencies": {
+    "keypair": "^1.0.1",
+    "lodash": "^4.17.10"
+  },
+  "devDependencies": {
+    "@types/jasmine": "^2.8.8",
+    "@types/lodash": "^4.14.109",
+    "@types/node": "^10.3.2",
+    "jasmine": "^3.1.0",
+    "ts-node": "^6.1.1",
+    "tslint": "^5.10.0",
+    "typescript": "^2.9.1"
+  }
+}
