@@ -5,7 +5,7 @@
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
-    "prepublish": "npm run lint && npm run build && npm run test",
+    "prepare": "npm run lint && npm run build && npm run test",
     "build": "tsc",
     "lint": "tslint 'lib/**/*.ts' && tslint 'test/**/*.ts' && tslint 'example/**/*.ts'",
     "test": "ts-node node_modules/.bin/jasmine test/**/*.spec.ts"
