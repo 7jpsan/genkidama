@@ -58,3 +58,5 @@ jspm_packages/
 .next
 
 dist/**/*
+test/data/decrypted.wav
+test/data/encrypted.file
