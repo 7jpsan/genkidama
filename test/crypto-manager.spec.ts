@@ -291,7 +291,7 @@ describe('About crypto manager', () => {
           console.log(`BAD LUCK: ${err}`);
         }
       };
-      //TODO: Currently, this exits the thread. It should be throwing an exception instead. 
+      //TODO: Currently, this exits the thread. It should be throwing an exception instead.
       // See crypto issues...
       //expect(catchThat).toThrow();
     });
@@ -309,20 +309,20 @@ describe('About crypto manager', () => {
 
         // Encrypt file into data/filename (synchronously, so the stream can read the contents)
         const encrypted = manager.encryptSym(keyPair.public, FILES.ORIGINAL_WAV);
-        const bufferEnc = await streamToBuffer(encrypted.data);
+        const bufferEnc = await streamToBuffer(encrypted.data) as Buffer;
         writeFileSync(FILES.ENCRYPTED_WAV ,bufferEnc);
 
         // Decrypt sym key
         const key = manager.decryptAsym(keyPair.private, encrypted.encryptedKey);
 
-        // Decrypt stored file 
+        // Decrypt stored file
         const plainAgain = manager.decryptSym(key, encrypted.iv, createReadStream(FILES.ENCRYPTED_WAV));
         const bufferDec = await streamToBuffer(plainAgain);
-        writeFileSync(FILES.DECRYPTED_WAV, bufferDec);
+        writeFileSync(FILES.DECRYPTED_WAV, bufferDec as Buffer);
 
          // Unencrypted plain file
          const originalFile = readFileSync(FILES.ORIGINAL_WAV);
-         // Unecryped plain file after 
+         // Unecryped plain file after
          expect(bufferDec).toEqual(originalFile);
 
       });
@@ -337,7 +337,7 @@ function streamToBuffer(stream: Stream) {
   return new Promise((resolve, reject) => {
     const chunks: Buffer[] = [];
     let finalResult: Buffer;
-  
+
     stream.on('data', (chunk: string) => {
       chunks.push(Buffer.from(chunk));
     }).on('end', () => {
