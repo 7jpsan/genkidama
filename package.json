@@ -16,6 +16,9 @@
     "type": "git",
     "url": "git+https://github.com/7jpsan/genkidama.git"
   },
+  "files": [
+    "/dist"
+  ],
   "keywords": [
     "crypto",
     "typescript",
