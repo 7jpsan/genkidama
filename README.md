@@ -1,3 +1,5 @@
+[![NPM](https://nodei.co/npm/genkidama.png)](https://npmjs.org/package/genkidama)
+
 # genkidama
 
 Crypto wrapper library to encrypt/decrypt files using AES-256-CBC/AES-256-CTR
