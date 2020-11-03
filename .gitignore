@@ -57,6 +57,6 @@ jspm_packages/
 # next.js build output
 .next
 
-dist/**/*
+dist
 test/data/decrypted.wav
 test/data/encrypted.file
