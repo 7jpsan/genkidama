@@ -1,4 +1,4 @@
-import { Stream, Readable } from "stream";
+import { Readable, Stream } from 'stream';
 
 export class BufferUtils {
   public static toStream(data: Buffer): Stream {
@@ -9,17 +9,18 @@ export class BufferUtils {
   }
 
   public static async streamToBuffer(stream: Stream) {
-    return new Promise((resolve: (data: Buffer) => void, reject) => {
+    return new Promise((resolve: (data: Buffer) => void) => {
       const chunks: Buffer[] = [];
       let finalResult: Buffer;
 
-      stream.on('data', (chunk: string) => {
-        chunks.push(Buffer.from(chunk));
-      }).on('end', () => {
-        finalResult = Buffer.concat(chunks);
-        resolve(finalResult);
-      });
+      stream
+        .on('data', (chunk: string) => {
+          chunks.push(Buffer.from(chunk));
+        })
+        .on('end', () => {
+          finalResult = Buffer.concat(chunks);
+          resolve(finalResult);
+        });
     });
   }
-
 }

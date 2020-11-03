@@ -1,4 +1,4 @@
-import { Stream } from "stream";
+import { Stream } from 'stream';
 
 /**
  * @property data: Contains the symmetric encrypted data

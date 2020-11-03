@@ -1,0 +1,11 @@
+node_modules
+.ds_store
+.serverless
+.build
+.vscode
+.npmignore
+Dockerfile
+dist/
+package-lock.json
+**/test/data
+LICENSE

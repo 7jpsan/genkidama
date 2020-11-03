@@ -12,5 +12,5 @@ declare module 'keypair' {
    * Get an RSA PEM key pair.
    * @param opts
    */
-  export default function(opts?: KeypairOptions): KeypairResults;
+  export default function (opts?: KeypairOptions): KeypairResults;
 }
