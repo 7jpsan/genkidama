@@ -3,7 +3,7 @@ import keypair from 'keypair';
 import { Readable, Stream } from 'stream';
 import { CryptoManager } from '../lib';
 
-const keyPair = keypair({ bits: 1024 });
+const keyPair = keypair({ bits: 2048 });
 
 describe('About crypto manager', () => {
   describe('getting a new instance', () => {
@@ -40,6 +40,18 @@ describe('About crypto manager', () => {
       expect(decData.toString()).toEqual(message.toString());
     });
 
+    it('should decrypt asymmetrically independent of CBC-CTR (OAEP)', () => {
+      const manager = CryptoManager.Aes256CtrOAEP();
+      const message = Buffer.from('This is a super secret message...', 'base64');
+      const data = manager.encryptAsym(keyPair.public, message);
+      const manager2 = CryptoManager.Aes256CbcOAEP();
+      const decData = manager2.decryptAsym(keyPair.private, data);
+
+      expect(data).toBeDefined();
+      expect(decData).toBeDefined();
+      expect(decData.toString()).toEqual(message.toString());
+    });
+
     it('should decrypt asymmetrically independent of CTR-CBC', () => {
       const manager = CryptoManager.Aes256Cbc();
       const message = Buffer.from('This is a super secret message...', 'base64');
@@ -50,6 +62,44 @@ describe('About crypto manager', () => {
       expect(data).toBeDefined();
       expect(decData).toBeDefined();
       expect(decData.toString()).toEqual(message.toString());
+    });
+
+    it('should decrypt asymmetrically independent of CTR-CBC (OAEP)', () => {
+      const manager = CryptoManager.Aes256CbcOAEP();
+      const message = Buffer.from('This is a super secret message...', 'base64');
+      const data = manager.encryptAsym(keyPair.public, message);
+      const manager2 = CryptoManager.Aes256CtrOAEP();
+      const decData = manager2.decryptAsym(keyPair.private, data);
+
+      expect(data).toBeDefined();
+      expect(decData).toBeDefined();
+      expect(decData.toString()).toEqual(message.toString());
+    });
+
+    it('should fail to decrypt asymmetrically when mixing (CTR OAEP and non OAEP)', () => {
+      const manager = CryptoManager.Aes256CtrOAEP();
+      const message = Buffer.from('This is a super secret message...', 'base64');
+      const data = manager.encryptAsym(keyPair.public, message);
+      const manager2 = CryptoManager.Aes256Ctr();
+      try {
+        manager2.decryptAsym(keyPair.private, data);
+        fail('should have failed');
+      } catch (error) {
+        expect(error).toBeDefined();
+      }
+    });
+
+    it('should fail to decrypt asymmetrically when mixing (CBC OAEP and non OAEP)', () => {
+      const manager = CryptoManager.Aes256CbcOAEP();
+      const message = Buffer.from('This is a super secret message...', 'base64');
+      const data = manager.encryptAsym(keyPair.public, message);
+      const manager2 = CryptoManager.Aes256Cbc();
+      try {
+        manager2.decryptAsym(keyPair.private, data);
+        fail('should have failed');
+      } catch (error) {
+        expect(error).toBeDefined();
+      }
     });
 
     it('should return different encrypted messages when called with same arguments', () => {

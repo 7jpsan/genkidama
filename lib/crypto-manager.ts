@@ -1,5 +1,5 @@
 import { publicEncrypt, privateDecrypt, createCipheriv, createDecipheriv } from 'crypto';
-import { RSA_PKCS1_OAEP_PADDING } from 'constants';
+import { RSA_PKCS1_OAEP_PADDING, RSA_PKCS1_PADDING } from 'constants';
 import { Encrypted } from './encrypted.i';
 import { Stream } from 'stream';
 import { createReadStream } from 'fs';
@@ -15,7 +15,7 @@ export class CryptoManager {
   private SYM_KEY_SIZE = 32;
   private IV_SIZE = 16;
 
-  private constructor(private ALGORITHM: algorithm = 'aes-256-ctr') {}
+  private constructor(private ALGORITHM: algorithm = 'aes-256-ctr', private PADDING: number = RSA_PKCS1_OAEP_PADDING) {}
 
   /**
    * @description Asymmetrically encrypts the string/buffer provided. It should be used for small chunks of data <245 bytes. Key size - padding/header. CTR/CBC
@@ -27,7 +27,7 @@ export class CryptoManager {
     const encBuffer = publicEncrypt(
       {
         key: pubKey,
-        padding: RSA_PKCS1_OAEP_PADDING,
+        padding: this.PADDING,
       },
       typeof dataToEncrypt === 'string' ? Buffer.from(dataToEncrypt) : dataToEncrypt
     );
@@ -44,7 +44,7 @@ export class CryptoManager {
     const decBuffer = privateDecrypt(
       {
         key: privKey,
-        padding: RSA_PKCS1_OAEP_PADDING,
+        padding: this.PADDING,
       },
       typeof dataToDecrypt === 'string' ? Buffer.from(dataToDecrypt, 'base64') : dataToDecrypt
     );
@@ -105,16 +105,30 @@ export class CryptoManager {
   }
 
   /**
-   * Provides an instance that uses AES-256-CTR
+   * Provides an instance that uses AES-256-CTR with RSA_PKCS1_PADDING
    */
   public static Aes256Ctr(): CryptoManager {
-    return new CryptoManager('aes-256-ctr');
+    return new CryptoManager('aes-256-ctr', RSA_PKCS1_PADDING);
+  }
+
+  /**
+   * Provides an instance that uses AES-256-CTR with RSA_PKCS1_OAEP_PADDING
+   */
+  public static Aes256CtrOAEP(): CryptoManager {
+    return new CryptoManager('aes-256-ctr', RSA_PKCS1_OAEP_PADDING);
   }
 
   /**
    * Provides an instance that uses AES-256-CBC
    */
   public static Aes256Cbc(): CryptoManager {
-    return new CryptoManager('aes-256-cbc');
+    return new CryptoManager('aes-256-cbc', RSA_PKCS1_PADDING);
+  }
+
+  /**
+   * Provides an instance that uses AES-256-CBC with RSA_PKCS1_OAEP_PADDING
+   */
+  public static Aes256CbcOAEP(): CryptoManager {
+    return new CryptoManager('aes-256-cbc', RSA_PKCS1_OAEP_PADDING);
   }
 }
