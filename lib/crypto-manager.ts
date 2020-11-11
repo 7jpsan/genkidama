@@ -81,7 +81,12 @@ export class CryptoManager {
    * @return Stream of deecrypted data. can be piped to a file or another stream.
    */
   public decryptSym(privKey: string | Buffer, iv: string | Buffer, data: Stream | string): Stream {
-    const decipher = createDecipheriv(this.ALGORITHM, privKey, iv);
+    const decipher = createDecipheriv(
+      this.ALGORITHM,
+      typeof privKey === 'string' ? Buffer.from(privKey, 'base64') : privKey,
+      typeof iv === 'string' ? Buffer.from(iv, 'base64') : iv
+    );
+
     const stream = this.getStreamFromInput(data);
     return stream.pipe(decipher);
   }
