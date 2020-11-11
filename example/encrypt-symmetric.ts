@@ -3,7 +3,7 @@ import keypair from 'keypair';
 import { BufferUtils } from './buffer-utils';
 
 // You can provide your own key pair by loading a file with fs or getting it from somewhere else...
-const keyPair = keypair({ bits: 1024 });
+const keyPair = keypair({ bits: 2048 });
 const dataToEncrypt = "Maybe you won't be such a disappointment in the next dimension";
 
 // Actual encryption call
@@ -18,7 +18,7 @@ BufferUtils.streamToBuffer(encryptedObj.data)
     console.log(
       `
     Data (b64): ${result.toString('base64')}
-    Key  (b64): ${encryptedObj.encryptedKey.toString('base64')} 
+    Key  (b64): ${encryptedObj.encryptedKey.toString('base64')}
     Iv   (b64): ${encryptedObj.iv.toString()}
     `
     );

@@ -1,8 +1,15 @@
 import { CryptoManager } from '../lib';
 import keypair from 'keypair';
+import { readFileSync } from 'fs';
+
+const PRIV_KEY = readFileSync(__dirname + '/rsa-priv-key.pem').toString();
+const PUB_KEY = readFileSync(__dirname + '/rsa-pub-key.pem').toString();
 
 // You can provide your own key pair by loading a file with fs or getting it from somewhere else...
-const keyPair = keypair({ bits: 1024 });
+const keyPair: { private: string; public: string } = { private: '', public: '' }; //keypair({ bits: 2048 });
+keyPair['public'] = PUB_KEY;
+keyPair['private'] = PRIV_KEY;
+
 const dataToEncrypt = "Maybe you won't be such a disappointment in the next dimension";
 
 // Asymmetric Encryption:

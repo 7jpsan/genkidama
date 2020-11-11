@@ -1,5 +1,5 @@
 import { publicEncrypt, privateDecrypt, createCipheriv, createDecipheriv } from 'crypto';
-import { RSA_PKCS1_PADDING } from 'constants';
+import { RSA_PKCS1_OAEP_PADDING } from 'constants';
 import { Encrypted } from './encrypted.i';
 import { Stream } from 'stream';
 import { createReadStream } from 'fs';
@@ -27,7 +27,7 @@ export class CryptoManager {
     const encBuffer = publicEncrypt(
       {
         key: pubKey,
-        padding: RSA_PKCS1_PADDING,
+        padding: RSA_PKCS1_OAEP_PADDING,
       },
       typeof dataToEncrypt === 'string' ? Buffer.from(dataToEncrypt) : dataToEncrypt
     );
@@ -44,7 +44,7 @@ export class CryptoManager {
     const decBuffer = privateDecrypt(
       {
         key: privKey,
-        padding: RSA_PKCS1_PADDING,
+        padding: RSA_PKCS1_OAEP_PADDING,
       },
       typeof dataToDecrypt === 'string' ? Buffer.from(dataToDecrypt, 'base64') : dataToDecrypt
     );
