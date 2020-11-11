@@ -75,17 +75,13 @@ export class CryptoManager {
   /**
    * @description Symmetrically encrypts the string/buffer provided. Recommended for large amounts of data/streams.
    *              The results contains a key that is asymmetrically encrypted with the pubKey provided. Not to be used with CBC
-   * @param privKey A key. It was randomly generated as part od the symmetric encryption process and provided asymmetrically encrypted as part of the response (needs to be decrypted)
-   * @param iv initiation vector (it was randomly generated as part of the symmetric encryption process and provided as part of the response)
+   * @param privKey (not b64) A key. It was randomly generated as part od the symmetric encryption process and provided asymmetrically encrypted as part of the response (needs to be decrypted)
+   * @param iv (not b64) initiation vector (it was randomly generated as part of the symmetric encryption process and provided as part of the response)
    * @param data Either a stream to be encrypted or a filepath that will be lodaded for deecryption
    * @return Stream of deecrypted data. can be piped to a file or another stream.
    */
   public decryptSym(privKey: string | Buffer, iv: string | Buffer, data: Stream | string): Stream {
-    const decipher = createDecipheriv(
-      this.ALGORITHM,
-      typeof privKey === 'string' ? Buffer.from(privKey, 'base64') : privKey,
-      typeof iv === 'string' ? Buffer.from(iv, 'base64') : iv
-    );
+    const decipher = createDecipheriv(this.ALGORITHM, privKey, iv);
 
     const stream = this.getStreamFromInput(data);
     return stream.pipe(decipher);
