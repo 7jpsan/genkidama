@@ -1,5 +1,4 @@
 import { CryptoManager } from '../lib';
-import keypair from 'keypair';
 import { readFileSync } from 'fs';
 
 const PRIV_KEY = readFileSync(__dirname + '/rsa-priv-key.pem').toString();

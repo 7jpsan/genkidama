@@ -19,8 +19,7 @@ module.exports = {
     camelcase: 'off',
     'no-empty-function': 'off',
     '@typescript-eslint/explicit-function-return-type': 'off',
-    '@typescript-eslint/no-use-before-define': ['error', { functions: false, classes: false }],
-    '@typescript-eslint/camelcase': ['warn', { allow: ['sym_key'] }],
+    '@typescript-eslint/no-use-before-define': 'off',
     '@typescript-eslint/no-unused-vars': [
       'error',
       {
@@ -30,6 +29,7 @@ module.exports = {
       },
     ],
     '@typescript-eslint/no-non-null-assertion': 'off',
+    '@typescript-eslint/explicit-module-boundary-types': 'off',
     '@typescript-eslint/no-inferrable-types': ['warn', { ignoreProperties: true }],
     'linebreak-style': ['error', 'unix'],
     // 'prefer-const': 'error',

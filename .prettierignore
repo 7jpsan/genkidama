@@ -8,3 +8,4 @@ node_modules
 .npmignore
 **/test/data
 LICENSE
+*.pem
