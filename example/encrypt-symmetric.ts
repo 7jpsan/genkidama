@@ -1,6 +1,5 @@
-import { CryptoManager } from '../lib';
-import keypair from 'keypair';
-import { BufferUtils } from './buffer-utils';
+import { CryptoManager, BufferUtils } from '../lib';
+import { keypair } from 'keypair';
 
 // You can provide your own key pair by loading a file with fs or getting it from somewhere else...
 const keyPair = keypair({ bits: 2048 });
