@@ -1,1 +1,1 @@
-export { Encrypted, CryptoManager } from './lib';
+export { Encrypted, CryptoManager, BufferUtils } from './lib';

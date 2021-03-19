@@ -1,6 +1,6 @@
 {
   "name": "genkidama",
-  "version": "3.2.4",
+  "version": "3.2.5",
   "description": "Crypto library for encryption/decryption of files/streams in node",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
